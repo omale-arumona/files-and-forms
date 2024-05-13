@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Files and Forms</title>
+    <style>
+        *,
+        html,
+        body,
+        ::before,
+        ::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            margin-top: 0;
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: midnightblue;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: wheat;
+            min-height: 50vh;
+            min-width: 50vw;
+            /* margin-top: 100px; */
+            flex-wrap: wrap;
+            border-radius: 10px;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 25vw;
+        }
+
+        #nameAlert,
+        #emailAlert,
+        #phoneAlert,
+        #successAlert {
+            background: white;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="nameAlert"></div>
+        <div id="successAlert"></div>
+        <div id="emailAlert"></div>
+        <div id="phoneAlert"></div>
+        <form action="/submit" class="form" method="">
+            <div>
+                <label for="firstName" class="firstName">First Name</label>
+                <input type="text" class="firstName" id="firstName" name='firstName'
+                    placeholder="first name must not contain numbers!!!" required>
+            </div>
+            <div>
+                <label for="lastName" class="lastName">Last Name</label>
+                <input type="text" class="lastName" id="lastName" name='lastName'
+                    placeholder="last name must not contain numbers!!!" required>
+            </div>
+            <div>
+                <label for="otherNames" class="otherNames">Other Names (optional)</label>
+                <input type="text" class="otherNames" id="otherNames" name='otherNames'
+                    placeholder="name must not contain numbers!!!">
+            </div>
+            <div>
+                <label for="emailAddress" class="emailAddress">Email</label>
+                <input type="email" class="emailAddress" id="emailAddress" name='emailAddress' required>
+            </div>
+            <div>
+                <label for="phoneNumber" class="phoneNumber">Phone Number</label>
+                <input type="text" class="phoneNumber" id="phoneNumber" name='phoneNumber'>
+            </div>
+            <div>
+                <label for="gender" class="gender">Gender</label>
+                <select name="gender" id="gender" required>
+                    <option value="male">male</option>
+                    <option value="female">female</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" id="submit">submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        // Select Elements
+        let firstName = document.getElementById('firstName');
+        let lastName = document.getElementById('lastName');
+        let otherNames = document.getElementById('otherNames');
+        let phoneNumber = document.getElementById('phoneNumber');
+        let emailAddress = document.getElementById('emailAddress');
+        let nameAlert = document.getElementById('nameAlert');
+        let emailAlert = document.getElementById('emailAlert');
+        let phoneAlert = document.getElementById('phoneAlert');
+        let successAlert = document.getElementById('successAlert');
+        let submit = document.getElementById('submit');
+
+        // Check first name inputs
+        firstName.addEventListener('keydown', (e) => {
+            let value = e.currentTarget.value;
+            if (isNaN(value)) {
+                e.currentTarget.value = value;
+            } else {
+                e.currentTarget.value = "";
+            }
+        });
+
+        //Check last name inputs
+        lastName.addEventListener('keydown', (e) => {
+            let value = e.currentTarget.value;
+            if (isNaN(value)) {
+                e.currentTarget.value = value;
+            } else {
+                e.currentTarget.value = "";
+            }
+        });
+
+        //Check other names input
+        otherNames.addEventListener('keydown', (e) => {
+            let value = e.currentTarget.value;
+            if (isNaN(value)) {
+                e.currentTarget.value = value;
+            } else {
+                e.currentTarget.value = "";
+            }
+        });
+
+        //Check what you are submitting
+        submit.addEventListener('click', (e) => {
+            if (firstName.value.length <= 1 || lastName.value.length <= 1 || otherNames.value.length <= 1) {
+                e.preventDefault();
+                nameAlert.textContent = "Length of name must be more than one character!!!";
+                setTimeout(() => {
+                    nameAlert.textContent = "";
+                }, 3000);
+            }
+
+            if (!emailAddress.value.includes("@") || !emailAddress.value.includes(".")) {
+                e.preventDefault();
+                emailAlert.textContent = `Email Address must contain '@' and '.' characters!!!`;
+                setTimeout(() => {
+                    emailAlert.textContent = "";
+                }, 3000);
+            }
+
+            if (phoneNumber.value.length > 11) {
+                e.preventDefault();
+                phoneAlert.textContent = "Length of phone number must be a max of eleven characters!!!";
+                setTimeout(() => {
+                    phoneAlert.textContent = "";
+                }, 3000);
+            }
+
+            if (firstName.value.length <= 1 && lastName.value.length <= 1 && otherNames.value.length <= 1 && !emailAddress.value.includes("@") && !emailAddress.value.includes(".") && phoneNumber.value.length > 11) {
+                successAlert.textContent = "Submitted successfully!!!";
+                setTimeout(() => {
+                    successAlert.textContent = "";
+                }, 3000);
+            }
+        })
+    </script>
+</body>
+
+</html>
