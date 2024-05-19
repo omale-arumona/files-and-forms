@@ -17,8 +17,8 @@
         }
 
         .container {
-            width: 100vw;
-            height: 100vh;
+            min-width: 100vw;
+            min-height: 715px;
             margin-top: 0;
             margin-bottom: 0;
             display: flex;
@@ -36,6 +36,7 @@
             background: wheat;
             min-height: 50vh;
             min-width: 50vw;
+            padding: 20px;
             /* margin-top: 100px; */
             flex-wrap: wrap;
             border-radius: 10px;
@@ -44,7 +45,7 @@
         div {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             margin-bottom: 10px;
             margin-top: 10px;
@@ -57,8 +58,18 @@
         #nameAlert,
         #emailAlert,
         #phoneAlert,
-        #successAlert {
+        #successAlert,
+        .firstSA,
+        .lastSA,
+        .otherSA {
             background: white;
+            color: red;
+        }
+
+        .firstNameAlert,
+        .otherNameAlert,
+        .lastNameAlert {
+            font-size: 12px;
             color: red;
         }
     </style>
@@ -66,6 +77,9 @@
 
 <body>
     <div class="container">
+        <div class="firstSA"></div>
+        <div class="lastSA"></div>
+        <div class="otherSA"></div>
         <div id="nameAlert"></div>
         <div id="successAlert"></div>
         <div id="emailAlert"></div>
@@ -75,16 +89,19 @@
                 <label for="firstName" class="firstName">First Name</label>
                 <input type="text" class="firstName" id="firstName" name='firstName'
                     placeholder="first name must not contain numbers!!!" required>
+                <span class="firstNameAlert"></span>
             </div>
             <div>
                 <label for="lastName" class="lastName">Last Name</label>
                 <input type="text" class="lastName" id="lastName" name='lastName'
                     placeholder="last name must not contain numbers!!!" required>
+                <span class="lastNameAlert"></span>
             </div>
             <div>
                 <label for="otherNames" class="otherNames">Other Names (optional)</label>
                 <input type="text" class="otherNames" id="otherNames" name='otherNames'
                     placeholder="name must not contain numbers!!!">
+                <span class="otherNameAlert"></span>
             </div>
             <div>
                 <label for="emailAddress" class="emailAddress">Email</label>
@@ -118,40 +135,62 @@
         let phoneAlert = document.getElementById('phoneAlert');
         let successAlert = document.getElementById('successAlert');
         let submit = document.getElementById('submit');
+        let firstNameAlert = document.querySelector(".firstNameAlert");
+        let lastNameAlert = document.querySelector(".lastNameAlert");
+        let otherNameAlert = document.querySelector(".otherNameAlert");
+        let firstSA = document.querySelector(".firstSA");
+        let lastSA = document.querySelector(".lastSA");
+        let otherSA = document.querySelector(".otherSA");
 
         // Check first name inputs
         firstName.addEventListener('keydown', (e) => {
-            let value = e.currentTarget.value;
-            if (isNaN(value)) {
-                e.currentTarget.value = value;
-            } else {
-                e.currentTarget.value = "";
+
+            if (e.key === "0" || e.key === "1" || e.key === "2" || e.key === "3" || e.key === "4" || e.key === "5" || e.key === "6" || e.key === "7" || e.key === "8" || e.key === "9") {
+
+                firstName.style.outline = "2px solid red";
+                firstNameAlert.textContent = "First name must not contain numbers!!!";
+
+                setTimeout(() => {
+                    firstName.style.outline = "";
+                    firstNameAlert.textContent = "";
+                }, 3000);
+
             }
         });
 
         //Check last name inputs
         lastName.addEventListener('keydown', (e) => {
-            let value = e.currentTarget.value;
-            if (isNaN(value)) {
-                e.currentTarget.value = value;
-            } else {
-                e.currentTarget.value = "";
+
+            if (e.key === "0" || e.key === "1" || e.key === "2" || e.key === "3" || e.key === "4" || e.key === "5" || e.key === "6" || e.key === "7" || e.key === "8" || e.key === "9") {
+
+                lastName.style.outline = "2px solid red";
+                lastNameAlert.textContent = "Last name must not contain numbers!!!";
+
+                setTimeout(() => {
+                    lastName.style.outline = "";
+                    lastNameAlert.textContent = "";
+                }, 3000);
             }
         });
 
         //Check other names input
         otherNames.addEventListener('keydown', (e) => {
-            let value = e.currentTarget.value;
-            if (isNaN(value)) {
-                e.currentTarget.value = value;
-            } else {
-                e.currentTarget.value = "";
+
+            if (e.key === "0" || e.key === "1" || e.key === "2" || e.key === "3" || e.key === "4" || e.key === "5" || e.key === "6" || e.key === "7" || e.key === "8" || e.key === "9") {
+
+                otherNames.style.outline = "2px solid red";
+                otherNameAlert.textContent = "Other names must not contain numbers!!!";
+
+                setTimeout(() => {
+                    otherNames.style.outline = "";
+                    otherNameAlert.textContent = "";
+                }, 3000);
             }
         });
 
         //Check what you are submitting
         submit.addEventListener('click', (e) => {
-            if (firstName.value.length <= 1 || lastName.value.length <= 1 || otherNames.value.length <= 1) {
+            if (firstName.value.length < 1 || lastName.value.length < 1 || otherNames.value.length < 1) {
                 e.preventDefault();
                 nameAlert.textContent = "Length of name must be more than one character!!!";
                 setTimeout(() => {
@@ -169,18 +208,51 @@
 
             if (phoneNumber.value.length > 11) {
                 e.preventDefault();
-                phoneAlert.textContent = "Length of phone number must be a max of eleven characters!!!";
+                phoneAlert.textContent = "Length of phone number must be a max of eleven characters or less!!!";
                 setTimeout(() => {
                     phoneAlert.textContent = "";
                 }, 3000);
             }
 
-            if (firstName.value.length <= 1 && lastName.value.length <= 1 && otherNames.value.length <= 1 && !emailAddress.value.includes("@") && !emailAddress.value.includes(".") && phoneNumber.value.length > 11) {
+            let firstNameVariable = firstName.value.includes("0") || firstName.value.includes("1") || firstName.value.includes("2") || firstName.value.includes("3") || firstName.value.includes("4") || firstName.value.includes("5") || firstName.value.includes("6") || firstName.value.includes("7") || firstName.value.includes("8") || firstName.value.includes("9");
+
+            let lastNameVariable = lastName.value.includes("0") || lastName.value.includes("1") || lastName.value.includes("2") || lastName.value.includes("3") || lastName.value.includes("4") || lastName.value.includes("5") || lastName.value.includes("6") || lastName.value.includes("7") || lastName.value.includes("8") || lastName.value.includes("9");
+
+            let otherNamesVariable = otherNames.value.includes("0") || otherNames.value.includes("1") || otherNames.value.includes("2") || otherNames.value.includes("3") || otherNames.value.includes("4") || otherNames.value.includes("5") || otherNames.value.includes("6") || otherNames.value.includes("7") || otherNames.value.includes("8") || otherNames.value.includes("9");
+
+            if (firstNameVariable) {
+                e.preventDefault();
+                firstSA.textContent = "First name must not contain numbers!!!";
+                setTimeout(() => {
+                    firstSA.textContent = "";
+                }, 3000);
+            }
+
+            if (lastNameVariable) {
+                e.preventDefault();
+                lastSA.textContent = "Last name must not contain numbers!!!";
+                setTimeout(() => {
+                    lastSA.textContent = "";
+                }, 3000);
+            }
+
+            if (otherNamesVariable) {
+                e.preventDefault();
+                otherSA.textContent = "Other names must not contain numbers!!!";
+                setTimeout(() => {
+                    otherSA.textContent = "";
+                }, 3000);
+            }
+
+
+            if (firstName.value.length >= 1 && lastName.value.length >= 1 && otherNames.value.length >= 1 && emailAddress.value.includes("@") && emailAddress.value.includes(".") && phoneNumber.value.length <= 11 && !firstNameVariable && !lastNameVariable && !otherNamesVariable) {
                 successAlert.textContent = "Submitted successfully!!!";
                 setTimeout(() => {
                     successAlert.textContent = "";
                 }, 3000);
             }
+
+            console.log(firstName.value.includes("3"));
         })
     </script>
 </body>

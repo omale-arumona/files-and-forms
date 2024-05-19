@@ -25,7 +25,6 @@ const server = createServer((req, res) => {
       let stringData = JSON.stringify(database);
       writeFileSync("./database.json", stringData);
     }
-
     res.writeHead(200, {
       "Content-Type": "text/html",
     });
@@ -43,6 +42,10 @@ const server = createServer((req, res) => {
             </html>
     `);
   } else {
+    res.writeHead(404, {
+      "Content-Type": "text/plain",
+    });
+
     res.end("Not Found");
   }
 });
