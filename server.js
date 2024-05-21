@@ -28,7 +28,7 @@ const server = createServer((req, res) => {
       });
 
       let databaseRes = readFileSync("./database.json", "utf8");
-      console.log(databaseRes);
+      // console.log(databaseRes);
       res.end(databaseRes);
     } else {
       let database = [data.query];
@@ -42,7 +42,7 @@ const server = createServer((req, res) => {
       });
 
       let databaseRes = readFileSync("./database.json", "utf8");
-      console.log(databaseRes);
+      // console.log(databaseRes);
       res.end(databaseRes);
     }
 
@@ -62,6 +62,14 @@ const server = createServer((req, res) => {
     //         </body>
     //         </html>
     // `);
+  } else if (req.url === "/data" && req.method === "GET") {
+    let databaseRes = readFileSync("./database.json", "utf8");
+    // console.log(databaseRes);
+    res.writeHead(201, {
+      "Content-Type": "text/plain",
+    });
+
+    res.end(databaseRes);
   } else {
     res.writeHead(404, {
       "Content-Type": "text/plain",

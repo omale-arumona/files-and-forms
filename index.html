@@ -121,9 +121,9 @@
                 </select>
             </div>
             <div>
-                <button type="submit" id="submit">submit</button>
             </div>
         </form>
+        <button type="submit" id="submit">submit</button>
     </div>
     <script>
         // Select Elements
@@ -252,9 +252,24 @@
                 setTimeout(() => {
                     successAlert.textContent = "";
                 }, 3000);
+
+                getData();
             }
 
-            console.log(firstName.value.includes("3"));
+            async function getData() {
+                try {
+                    let response = await fetch("/data");
+
+                    // console.log(response);
+                    let data = await response.json();
+                    console.log(data);
+
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            // console.log(firstName.value.includes("3"));
         })
     </script>
 </body>
