@@ -122,8 +122,8 @@
             </div>
             <div>
             </div>
+            <button type="submit" id="submit">submit</button>
         </form>
-        <button type="submit" id="submit">submit</button>
     </div>
     <script>
         // Select Elements
@@ -252,18 +252,6 @@
                 setTimeout(() => {
                     successAlert.textContent = "";
                 }, 3000);
-
-                getData();
-            }
-
-            async function getData() {
-                try {
-                    let response = await fetch("/data");
-                    let data = await response.json();
-                    firstSA.textContent = `${JSON.stringify(data)}`;
-                } catch (error) {
-                    console.log(error);
-                }
             }
         })
     </script>

@@ -45,31 +45,6 @@ const server = createServer((req, res) => {
       // console.log(databaseRes);
       res.end(databaseRes);
     }
-
-    // res.writeHead(200, {
-    //   "Content-Type": "text/html",
-    // });
-    // res.end(`<!DOCTYPE html>
-    //         <html lang="en">
-    //         <head>
-    //             <meta charset="UTF-8">
-    //             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    //             <title>Document</title>
-    //         </head>
-    //         <body>
-    //             <h3>Submitted successfully</h3>
-    //             <button type="button"><a href="http://localhost:8080">Back to homepage/form</a></button>
-    //         </body>
-    //         </html>
-    // `);
-  } else if (req.url === "/data" && req.method === "GET") {
-    let databaseRes = readFileSync("./database.json", "utf8");
-    // console.log(databaseRes);
-    res.writeHead(201, {
-      "Content-Type": "text/plain",
-    });
-
-    res.end(databaseRes);
   } else {
     res.writeHead(404, {
       "Content-Type": "text/plain",
