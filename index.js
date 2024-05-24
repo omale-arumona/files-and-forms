@@ -9,6 +9,12 @@ const server = createServer((req, res) => {
       "Content-Type": "text/html",
     });
     res.end(form);
+  } else if (req.url === "/data" && req.method === "GET") {
+    res.writeHead(200, {
+      "Content-Type": "text/plain",
+    });
+
+    res.end("Hello data");
   } else if (req.method === "GET") {
     let data = url.parse(req.url, true);
     let readData = readFileSync("./database.json", "utf8");
